@@ -7,6 +7,17 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 18
 }).addTo(map);
 
+// Create the key table
+var keyTable = '<table>';
+keyTable += '<tr><th>Depth</th><th>Color</th></tr>';
+keyTable += '<tr><td>0 - 10 km</td><td style="background-color: ' + getColor(10) + '"></td></tr>';
+keyTable += '<tr><td>10 - 20 km</td><td style="background-color: ' + getColor(20) + '"></td></tr>';
+// Add more rows for other depth ranges as needed
+keyTable += '</table>';
+
+// Add the key table to the HTML
+document.getElementById('key').innerHTML = keyTable;
+
 // Fetch the GeoJSON data
 fetch('static/js/all_day.geojson')
   .then(response => response.json())
@@ -46,3 +57,16 @@ function getColor(depth) {
 
   return color;
 }
+
+// Capture the map as an image
+L.imageOverlay(map).addTo(map);
+
+// Use the Leaflet Image plugin to convert the map to an image
+leafletImage(map, function (err, canvas) {
+  // Create a new image element
+  var image = new Image();
+  image.src = canvas.toDataURL();
+
+  // Append the image to the HTML body or a specific element
+  document.body.appendChild(image);
+});
