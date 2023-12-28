@@ -57,16 +57,3 @@ function getColor(depth) {
 
   return color;
 }
-
-// Capture the map as an image
-L.imageOverlay(map).addTo(map);
-
-// Use the Leaflet Image plugin to convert the map to an image
-leafletImage(map, function (err, canvas) {
-  // Create a new image element
-  var image = new Image();
-  image.src = canvas.toDataURL();
-
-  // Append the image to the HTML body or a specific element
-  document.body.appendChild(image);
-});
