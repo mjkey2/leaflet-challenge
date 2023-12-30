@@ -19,7 +19,7 @@ keyTable += '</table>';
 document.getElementById('key').innerHTML = keyTable;
 
 // Fetch the GeoJSON data
-fetch('static/js/all_day.geojson')
+fetch('static/js/all_week.geojson')
   .then(response => response.json())
   .then(data => {
     // Create a GeoJSON layer and add it to the map
