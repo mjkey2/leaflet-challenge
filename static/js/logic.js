@@ -57,3 +57,42 @@ function getColor(depth) {
 
   return color;
 }
+
+//d3.json("tectonicplates-master/GeoJSON/PB2002_plates.json").then(function(data) {
+//  var tectonicPlatesData = L.geoJSON(data);
+//  tectonicPlatesData.addTo(map);
+//});
+
+// Create a new layer group for the tectonic plates
+var tectonicPlates = new L.LayerGroup();
+
+// Fetch the tectonic plates data
+d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json", function(platesData) {
+  // Create a GeoJSON layer for the tectonic plates data
+  L.geoJSON(platesData, {
+    style: function(feature) {
+      return {
+        color: "orange",
+        weight: 2
+      };
+    }
+  }).addTo(tectonicPlates);
+});
+
+// Add the tectonic plates layer to the map
+tectonicPlates.addTo(map);
+
+// Create a baseMaps object to hold the base layers
+var baseMaps = {
+  "Street Map": streetMap,
+  "Topographic Map": topoMap
+};
+
+// Create an overlayMaps object to hold the overlay layers
+var overlayMaps = {
+  "Earthquakes": earthquakes,
+  "Tectonic Plates": tectonicPlates
+};
+
+// Add a layer control to the map
+L.control.layers(baseMaps, overlayMaps).addTo(map);
