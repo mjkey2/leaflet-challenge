@@ -65,7 +65,6 @@ earthquakes = fetch('static/js/all_week.geojson')
 
 // Step 1: Obtain the tectonic plates dataset
 var tectonicPlatesURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
-
 // Step 2: Import the tectonic plates dataset
 d3.json(tectonicPlatesURL).then(function(data) {
   // Step 3: Create a new layer for the tectonic plates
@@ -82,12 +81,6 @@ d3.json(tectonicPlatesURL).then(function(data) {
   tectonicPlatesLayer.addTo(myMap);
 });
 
-// Create an overlayMaps object to hold the overlay layers
-var overlayMaps = {
-  "Earthquakes": earthquakes,
-  "Tectonic Plates": tectonicPlatesLayer
-};
-
 // Pass our map layers into our layer control.
 // Add the layer control to the map.
-L.control.layers(baseMaps, overlayMaps).addTo(myMap);
+var layerControl = L.control.layers(baseMaps).addTo(myMap);
